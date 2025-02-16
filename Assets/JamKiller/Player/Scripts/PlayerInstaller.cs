@@ -14,8 +14,7 @@ public class PlayerInstaller : MonoInstaller
         Container
             .Bind<Player>()
             .FromComponentInHierarchy()
-            .AsSingle()
-            .WhenInjectedInto<PlayerMotionHandler>();
+            .AsSingle();
 
         Container
             .Bind<PlayerMotionHandler>()
