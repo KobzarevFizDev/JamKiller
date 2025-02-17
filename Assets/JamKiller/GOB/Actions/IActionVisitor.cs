@@ -6,7 +6,10 @@ namespace JamKiller.GOB
 {
     public interface IActionVisitor 
     {
-        public bool Visit(MoveToPointAction action, ActionContext context, float deltaTime);
-        public bool Visit(FindCoverAction action, ActionContext context);
+        public void Visit(MoveToTarget action, ActionContext context, float deltaTime);
+        public void Visit(FindCoverAction action, ActionContext context);
+        public void Visit(WaitAction action, ActionContext context);
+        public void Visit(FindEnemyUnitAction action, ActionContext context);
+        public void Visit(AttackAction action, ActionContext context, float deltaTime);
     }
 }

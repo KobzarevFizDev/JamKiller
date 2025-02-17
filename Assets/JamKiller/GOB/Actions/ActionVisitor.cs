@@ -14,32 +14,48 @@ namespace JamKiller.GOB
 
     public class ActionVisitor : IActionVisitor
     {
-        public bool Visit(FindCoverAction action, ActionContext context)
+        public void Visit(FindCoverAction findCoverAction, ActionContext context)
         {
-            context.TargetCover = action.FindCover();
-            action.Status = ExecuteStatus.Completed;
-            return true;
+            Debug.Log("Выполняется действие FindCover");
+            context.Target = findCoverAction.Find().transform;
+            findCoverAction.Status = ExecuteStatus.Completed;
         }
 
-        public bool Visit(MoveToPointAction action, ActionContext context, float deltaTime)
+        public void Visit(MoveToTarget moveToPointAction, ActionContext context, float deltaTime)
         {
-            if(action.Status == ExecuteStatus.NotStarted)
+            Debug.Log("Выполняется действие MoveToPoint");
+
+            if(moveToPointAction.Status == ExecuteStatus.NotStarted)
             {
-                action.SetTarget(context.TargetCover.transform.position);
-                action.Status = ExecuteStatus.InProgress;
-                return false;
+                moveToPointAction.SetTarget(context.Target);
+                moveToPointAction.Status = ExecuteStatus.InProgress;
             }
-            else if(action.Status == ExecuteStatus.InProgress)
+            else if(moveToPointAction.Status == ExecuteStatus.InProgress)
             {
-                action.MoveToPoint(context.OwnerUnit);
-                if (action.IsTargetReached)
-                    action.Status = ExecuteStatus.Completed;
-                return false;
+                if (moveToPointAction.IsTargetReached)
+                    moveToPointAction.Status = ExecuteStatus.Completed;
             }
-            else
-            {
-                return true;
-            }
+        }
+
+        public void Visit(WaitAction action, ActionContext context)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Visit(FindEnemyUnitAction findEnemyAction, ActionContext context)
+        {
+            Debug.Log("Выполняется действие FindEnemy");
+            var enemy = findEnemyAction.Find();
+            context.TargetEnemyUnit = enemy;
+            context.Target = enemy.GetTransform();
+            findEnemyAction.Status = ExecuteStatus.Completed;
+        }
+
+        public void Visit(AttackAction attackAction, ActionContext context, float deltaTime)
+        {
+            Debug.Log("Выполняется действие AttackAction");
+            attackAction.Attack(context.OwnerUnit, deltaTime);
+            attackAction.Status = ExecuteStatus.InProgress;
         }
     }
 }

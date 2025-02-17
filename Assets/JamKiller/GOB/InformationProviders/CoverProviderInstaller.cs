@@ -10,10 +10,12 @@ namespace JamKiller
     {
         public override void InstallBindings()
         {
+            Cover[] covers = FindObjectsOfType<Cover>();
+
             Container
                 .Bind<CoverProvider>()
-                .FromComponentInHierarchy()
-                .AsSingle();
+                .AsSingle()
+                .WithArguments(covers);
         }
     }
 }

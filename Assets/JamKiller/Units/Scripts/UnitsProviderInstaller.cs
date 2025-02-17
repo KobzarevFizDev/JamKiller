@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-namespace JamKiller.GOB
+namespace JamKiller.Units
 {
-    public class GoalFactoryInstaller : MonoInstaller
+    public class UnitsProviderInstaller : MonoInstaller
     {
         public override void InstallBindings()
         {
             Container
-                .Bind<GoalFactory>()
+                .Bind<UnitsProvider>()
+                .FromComponentInHierarchy()
                 .AsSingle();
         }
     }

@@ -14,9 +14,15 @@ namespace JamKiller.Units
 
         private void Start()
         {
+
+            _animator.SetFloat(_forwardHash, 1f);
+            _animator.SetFloat(_backwardHash, 0f);
+
+        }
+
+        private void Update()
+        {
             
-
-
         }
     }
 }

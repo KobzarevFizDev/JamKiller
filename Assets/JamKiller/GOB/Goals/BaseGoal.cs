@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JamKiller.Units;
 
 namespace JamKiller.GOB
 {
@@ -9,6 +10,7 @@ namespace JamKiller.GOB
     {
         public abstract float Priority { get; }
         public abstract GoalId Id { get; }
+        public bool IsCompleted { private set; get; }
 
         protected List<BaseAction> _actions;
 
@@ -23,10 +25,22 @@ namespace JamKiller.GOB
 
         public void Execute(float deltaTime)
         {
+
+            bool allCompleted = true;
             foreach(var action in _actions)
             {
-                action.Accept(_visitor, _context, deltaTime);
+                if (action.Status == ExecuteStatus.Completed)
+                    continue;
+
+                allCompleted = false;
+
+                if(action.Status == ExecuteStatus.InProgress || action.Status == ExecuteStatus.NotStarted)
+                {
+                    action.Execute(_visitor, _context, deltaTime);
+                    break;
+                }
             }
+            IsCompleted = allCompleted;
         }
 
         public abstract void Interrupt();

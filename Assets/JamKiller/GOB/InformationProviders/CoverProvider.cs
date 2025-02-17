@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using JamKiller.Location;
-using JamKiller.GOB;
+using JamKiller.Units;
 using System.Linq;
 
 namespace JamKiller.Location
