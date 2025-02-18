@@ -9,14 +9,10 @@ namespace JamKiller.GOB
     {
         public AttackAction(IUnit ownerUnit) : base(ownerUnit) { }
 
-        public void Attack()
+        public override void Execute(ActionContext context, float deltaTime)
         {
             _ownerUnit.Attack();
-        }
-
-        public override void Execute(IActionVisitor visitor, ActionContext context, float deltaTime)
-        {
-            visitor.Visit(this, context, deltaTime);
+            Status = ExecuteStatus.InProgress;
         }
     }
 }

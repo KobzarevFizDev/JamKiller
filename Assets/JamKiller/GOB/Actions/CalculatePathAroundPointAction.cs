@@ -9,7 +9,7 @@ namespace JamKiller.GOB
     {
         public CalculatePathAroundPointAction(IUnit ownerUnit) : base(ownerUnit) { }
 
-        public void CalculatePath(ActionContext context)
+        public override void Execute(ActionContext context, float deltaTime)
         {
             Vector3 center = context.AvoidancePoint;
             Vector3 finishPoint = context.DestinationPoint;
@@ -40,11 +40,7 @@ namespace JamKiller.GOB
                 DebugExtension.DebugWireSphere(p, Color.red, 1f, 1000f);
             }
             context.Path = path;
-        }
-
-        public override void Execute(IActionVisitor visitor, ActionContext context, float deltaTime)
-        {
-            visitor.Visit(this, context);
+            Status = ExecuteStatus.Completed;
         }
     }
 }

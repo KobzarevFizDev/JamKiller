@@ -9,9 +9,9 @@ namespace JamKiller.GOB
     {
         public WaitAction(IUnit ownerUnit) : base(ownerUnit) { }
 
-        public override void Execute(IActionVisitor visitor, ActionContext context, float deltaTime)
+        public override void Execute(ActionContext context, float deltaTime)
         {
-            visitor.Visit(this, context);
+            throw new System.NotImplementedException();
         }
     }
 }

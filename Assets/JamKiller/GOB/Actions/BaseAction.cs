@@ -5,6 +5,8 @@ using JamKiller.Units;
 
 namespace JamKiller.GOB
 {
+    public enum ExecuteStatus { NotStarted, InProgress, Completed }
+
     public abstract class BaseAction
     {
         public ExecuteStatus Status { get; set; }
@@ -15,6 +17,6 @@ namespace JamKiller.GOB
             _ownerUnit = ownerUnit;
         }
 
-        public abstract void Execute(IActionVisitor visitor, ActionContext context, float deltaTime);
+        public abstract void Execute(ActionContext context, float deltaTime);
     }
 }

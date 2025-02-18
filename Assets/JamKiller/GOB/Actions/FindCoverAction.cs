@@ -14,14 +14,18 @@ namespace JamKiller.GOB
             _coverProvider = coverProvider;
         }
 
-        public Cover Find()
+        public override void Execute(ActionContext context, float deltaTime)
         {
-            return _coverProvider.GetNearestCover(_ownerUnit);
-        }
-
-        public override void Execute(IActionVisitor visitor, ActionContext context, float deltaTime)
-        {
-            visitor.Visit(this, context);
+            Cover cover = _coverProvider.GetNearestCover(_ownerUnit);
+            if(cover.TryGetSafePosition(out Vector3 safePosition))
+            {
+                context.DestinationPoint = safePosition;
+                Status = ExecuteStatus.Completed;
+            }
+            else
+            {
+                throw new System.InvalidOperationException("Get save position of cover error");
+            }
         }
     }
 }

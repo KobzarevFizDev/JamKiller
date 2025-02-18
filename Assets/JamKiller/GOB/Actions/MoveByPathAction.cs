@@ -9,16 +9,19 @@ namespace JamKiller.GOB
     {
         public MoveByPathAction(IUnit ownerUnit) : base(ownerUnit) { }
 
-        public void SetPath(ActionContext context)
-        {
-            _ownerUnit.StartMoveByPath(context.Path);
-        }
 
-        public bool IsPointReached => _ownerUnit.IsMoveCompleted();
-
-        public override void Execute(IActionVisitor visitor, ActionContext context, float deltaTime)
+        public override void Execute(ActionContext context, float deltaTime)
         {
-            visitor.Visit(this, context);
+            if (Status == ExecuteStatus.NotStarted)
+            {
+                _ownerUnit.StartMoveByPath(context.Path);
+                Status = ExecuteStatus.InProgress;
+            }
+            else if (Status == ExecuteStatus.InProgress)
+            {
+                if (_ownerUnit.IsMoveCompleted())
+                    Status = ExecuteStatus.Completed;
+            }
         }
     }
 }
