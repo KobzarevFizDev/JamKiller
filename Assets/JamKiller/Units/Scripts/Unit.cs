@@ -7,10 +7,20 @@ using JamKiller.Units;
 
 namespace JamKiller.Units
 {
+    // todo: Нужна декомпозиция логики
     public class Unit : MonoBehaviour, IUnit
     {
         [SerializeField] private NavMeshAgent _agent;
         [SerializeField] private UnitAnimation _unitAnimation;
+
+        [Range(1, 10)]
+        [SerializeField] private float _optimalRangedAttackDistance;
+
+        [Range(10, 100)]
+        [SerializeField] private int _maxHealth = 100;
+        [Range(10, 100)]
+        [SerializeField] private int _criticalHealth = 20;
+
         [Range(0.2f, 1f)]
         [SerializeField] private float _timeBetweenPathUpdate = 0.5f;
         [Range(0.2f, 1f)]
@@ -19,7 +29,15 @@ namespace JamKiller.Units
         private float _timerUpdatePath;
         private float _timerAttack;
 
+        private int _currentHealth;
+        private int _numberAttackWithoutChanging;
+
         private Transform _target;
+
+        private void Start()
+        {
+            _currentHealth = _maxHealth;
+        }
 
         public Vector3 GetPosition()
         {
@@ -52,6 +70,7 @@ namespace JamKiller.Units
             {
                 Debug.Log("Анимация атаки");
                 _timerAttack -= _timeBetweenAttack;
+                _numberAttackWithoutChanging++;
             }
 
         }
@@ -68,12 +87,19 @@ namespace JamKiller.Units
             _agent.isStopped = false;
         }
 
-        public void StopMoveToTarget()
+        public void StartMoveToPoint(Vector3 point)
+        {
+            _target = null;
+            _agent.SetDestination(point);
+            _agent.isStopped = false;
+        }
+
+        public void StopMove()
         {
             _target = null;
             _agent.isStopped = true;
         }
-        public bool IsReachedTarget()
+        public bool IsMoveCompleted()
         {
             return (_agent.pathPending == false) && (_agent.remainingDistance <= _agent.stoppingDistance + 0.1f);
         }
@@ -81,6 +107,38 @@ namespace JamKiller.Units
         public Transform GetTransform()
         {
             return transform;
+        }
+
+        public bool IsSeriouslyInjured()
+        {
+            return _currentHealth <= _criticalHealth;
+        }
+
+        public float GetOptimalRangedAttackDistance()
+        {
+            return _optimalRangedAttackDistance;
+        }
+
+        public int GetNumberAttacksWithouChangingPosition()
+        {
+            return _numberAttackWithoutChanging;
+        }
+
+        public void StartMoveByPath(Vector3[] path)
+        {
+            StartCoroutine(MoveByPathRoutine(path));
+        }
+
+        private IEnumerator MoveByPathRoutine(Vector3[] path)
+        {
+            for(int currentPoint = 0; currentPoint < path.Length; currentPoint++)
+            {
+                Vector3 wayPoint = path[currentPoint];
+                _agent.SetDestination(wayPoint);
+                yield return null;
+
+                yield return new WaitUntil(() => _agent.remainingDistance > 0.5f);
+            }
         }
     }
 }

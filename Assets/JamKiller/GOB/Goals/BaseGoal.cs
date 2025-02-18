@@ -5,20 +5,22 @@ using JamKiller.Units;
 
 namespace JamKiller.GOB
 {
-    public enum GoalId { Hide, Attack, ChangeAttackPosition }
+    public enum GoalId { Hide, MeleeAttack, RangedAttack, ChangeRangedAttackPosition }
     public abstract class BaseGoal
     {
-        public abstract float Priority { get; }
+        public abstract int Utility { get; }
         public abstract GoalId Id { get; }
         public bool IsCompleted { private set; get; }
 
         protected List<BaseAction> _actions;
+        protected IUnit _ownerUnit;
 
         private ActionVisitor _visitor;
         private ActionContext _context;
 
         public BaseGoal(IUnit ownerUnit)
         {
+            _ownerUnit = ownerUnit;
             _visitor = new ActionVisitor();
             _context = new ActionContext(ownerUnit);
         }

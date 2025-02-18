@@ -10,7 +10,19 @@ namespace JamKiller.Units
 
         [SerializeField] private TeamId _team;
 
+
+
         public void Attack()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public int GetNumberAttacksWithouChangingPosition()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public float GetOptimalRangedAttackDistance()
         {
             throw new System.NotImplementedException();
         }
@@ -30,7 +42,17 @@ namespace JamKiller.Units
             return true;
         }
 
-        public bool IsReachedTarget()
+        public bool IsMoveCompleted()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool IsSeriouslyInjured()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void StartMoveToPoint(Vector3 point)
         {
             throw new System.NotImplementedException();
         }
@@ -40,7 +62,7 @@ namespace JamKiller.Units
             throw new System.NotImplementedException();
         }
 
-        public void StopMoveToTarget()
+        public void StopMove()
         {
             throw new System.NotImplementedException();
         }
@@ -50,5 +72,9 @@ namespace JamKiller.Units
             return transform.position;
         }
 
+        public void StartMoveByPath(Vector3[] path)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

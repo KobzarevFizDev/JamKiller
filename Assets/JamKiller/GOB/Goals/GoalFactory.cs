@@ -22,9 +22,19 @@ namespace JamKiller.GOB
             return new HideGoal(_coverProvider, owner);
         }
 
-        public AttackUnitGoal CreateAttackUnitGoal(IUnit owner)
+        public MeleeAttackUnitGoal CreateAttackUnitGoal(IUnit owner)
         {
-            return new AttackUnitGoal(_unitsProvider, owner);
+            return new MeleeAttackUnitGoal(_unitsProvider, owner);
+        }
+
+        public RangedAttackGoal CreateRangedAttackGoal(IUnit owner)
+        {
+            return new RangedAttackGoal(_unitsProvider, owner);
+        }
+
+        public ChangeRangedAttackPositionGoal CreateChangedAttackPositionGoal(IUnit owner)
+        {
+            return new ChangeRangedAttackPositionGoal(owner);
         }
     }
 }

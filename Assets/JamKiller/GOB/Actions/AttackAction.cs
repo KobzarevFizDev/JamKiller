@@ -9,9 +9,9 @@ namespace JamKiller.GOB
     {
         public AttackAction(IUnit ownerUnit) : base(ownerUnit) { }
 
-        public void Attack(IUnit ownerUnit, float deltaTime)
+        public void Attack()
         {
-            ownerUnit.Attack();
+            _ownerUnit.Attack();
         }
 
         public override void Execute(IActionVisitor visitor, ActionContext context, float deltaTime)
