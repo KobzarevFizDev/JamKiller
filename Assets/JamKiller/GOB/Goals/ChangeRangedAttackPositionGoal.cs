@@ -21,7 +21,8 @@ namespace JamKiller.GOB
 
         public override GoalId Id => GoalId.ChangeRangedAttackPosition;
 
-        public ChangeRangedAttackPositionGoal(IUnit ownerUnit, GoalContext goalContext) : base(ownerUnit, goalContext) 
+        public ChangeRangedAttackPositionGoal(IUnit ownerUnit, GoalContext goalContext) 
+            : base(ownerUnit, goalContext, isLoop: true) 
         {
             _actions = new List<BaseAction>();
             _actions.Add(new FindRangedAttackPositionAction(ownerUnit));

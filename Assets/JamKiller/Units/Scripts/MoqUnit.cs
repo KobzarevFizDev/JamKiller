@@ -76,5 +76,10 @@ namespace JamKiller.Units
         {
             throw new System.NotImplementedException();
         }
+
+        public Bounds GetNavMeshBounds()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

@@ -1,22 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using JamKiller.Location;
 using JamKiller.Units;
 
 namespace JamKiller.GOB
 {
-    public class HideGoal : BaseGoal
+    public class SearchEnemyGoal : BaseGoal
     {
-        public override GoalId Id => GoalId.Hide;
-        public override int Utility => _ownerUnit.IsSeriouslyInjured() ? 10 : 0;
+        public override int Utility => throw new System.NotImplementedException();
 
+        public override GoalId Id => throw new System.NotImplementedException();
 
-        public HideGoal(CoverProvider coverProvider, IUnit ownerUnit, GoalContext context) 
+        public SearchEnemyGoal(IUnit ownerUnit, GoalContext context) 
             : base(ownerUnit, context, isLoop: true)
         {
             _actions = new List<BaseAction>();
-            _actions.Add(new FindCoverAction(coverProvider, ownerUnit));
+            _actions.Add(new CreateRandomWayPointAction(ownerUnit));
             _actions.Add(new MoveToPointAction(ownerUnit));
         }
 

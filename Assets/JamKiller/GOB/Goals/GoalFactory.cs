@@ -41,5 +41,10 @@ namespace JamKiller.GOB
         {
             return new ChangeRangedAttackPositionGoal(owner, goalContext);
         }
+
+        public SearchEnemyGoal CreateSearchEnemyGoal(IUnit owner, GoalContext goalContext)
+        {
+            return new SearchEnemyGoal(owner, goalContext);
+        }
     }
 }

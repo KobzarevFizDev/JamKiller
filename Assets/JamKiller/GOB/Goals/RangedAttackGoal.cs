@@ -21,10 +21,11 @@ namespace JamKiller.GOB
             }
         }
 
-        public RangedAttackGoal(UnitsProvider unitsProvider, IUnit ownerUnit, GoalContext context) : base(ownerUnit, context)
+        public RangedAttackGoal(UnitsProvider unitsProvider, IUnit ownerUnit, GoalContext context) 
+            : base(ownerUnit, context, isLoop: true)
         {
             _actions = new List<BaseAction>();
-            _actions.Add(new FindEnemyUnitAction(unitsProvider, ownerUnit));
+            //_actions.Add(new FindEnemyUnitAction(unitsProvider, ownerUnit));
             _actions.Add(new FindRangedAttackPositionAction(ownerUnit));
             _actions.Add(new MoveToPointAction(ownerUnit));
             _actions.Add(new AttackAction(ownerUnit));

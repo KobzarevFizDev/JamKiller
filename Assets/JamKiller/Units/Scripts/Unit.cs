@@ -4,12 +4,16 @@ using UnityEngine;
 using JamKiller.GOB;
 using UnityEngine.AI;
 using JamKiller.Units;
+using Unity.AI.Navigation;
+using Zenject;
 
 namespace JamKiller.Units
 {
     // todo: Нужна декомпозиция логики
     public class Unit : MonoBehaviour, IUnit
     {
+        private enum MovementType { None, FollowTarget, MoveToPoint, MoveByPath }
+
         [SerializeField] private NavMeshAgent _agent;
         [SerializeField] private UnitAnimation _unitAnimation;
 
@@ -33,6 +37,10 @@ namespace JamKiller.Units
         private int _numberAttackWithoutChanging;
 
         private Transform _target;
+        private Vector3[] _path;
+        private Vector3 _destinationPoint;
+
+        private MovementType _movementType;
 
         private void Start()
         {
@@ -51,14 +59,15 @@ namespace JamKiller.Units
 
         private void UpdatePathIfNeccessary()
         {
-            if (_target == null)
-                return;
-
-            _timerUpdatePath += Time.deltaTime;
-            if (_timerUpdatePath > _timeBetweenPathUpdate)
+            if (_movementType == MovementType.FollowTarget)
             {
-                _timerUpdatePath -= _timeBetweenPathUpdate;
-                _agent.SetDestination(_target.position);
+
+                _timerUpdatePath += Time.deltaTime;
+                if (_timerUpdatePath > _timeBetweenPathUpdate)
+                {
+                    _timerUpdatePath -= _timeBetweenPathUpdate;
+                    _agent.SetDestination(_target.position);
+                }
             }
         }
 
@@ -82,6 +91,7 @@ namespace JamKiller.Units
 
         public void StartMoveToTarget(Transform target)
         {
+            _movementType = MovementType.FollowTarget;
             _target = target;
             _agent.SetDestination(target.position);
             _agent.isStopped = false;
@@ -89,13 +99,16 @@ namespace JamKiller.Units
 
         public void StartMoveToPoint(Vector3 point)
         {
-            _target = null;
+            _movementType = MovementType.MoveToPoint;
+            _destinationPoint = point;
             _agent.SetDestination(point);
             _agent.isStopped = false;
         }
 
         public void StartMoveByPath(Vector3[] path)
         {
+            _movementType = MovementType.MoveByPath;
+            _path = path;
             StartCoroutine(MoveByPathRoutine(path));
         }
 
@@ -120,11 +133,40 @@ namespace JamKiller.Units
         {
             _target = null;
             _agent.isStopped = true;
+            _movementType = MovementType.None;
         }
         public bool IsMoveCompleted()
         {
-            return !_agent.pathPending &&
-           (!_agent.hasPath || _agent.remainingDistance <= _agent.stoppingDistance);
+            if (_movementType == MovementType.None)
+                return false;
+
+            Vector3 destinationPoint = default;
+            switch (_movementType)
+            {
+                case MovementType.FollowTarget:
+                    destinationPoint = _target.position;
+                    break;
+
+                case MovementType.MoveByPath:
+                    destinationPoint = _path[^1];
+                    break;
+
+                case MovementType.MoveToPoint:
+                    destinationPoint = _destinationPoint;
+                    break;
+
+                default:
+                    throw new System.ArgumentException("Incorrect movement type");
+            }
+
+            Vector3 a = new Vector3(destinationPoint.x, 0, destinationPoint.z);
+            Vector3 b = new Vector3(transform.position.x, 0, transform.position.z);
+
+            return Vector3.Distance(a, b) < 1f;
+            //return (destinationPoint - transform.position).sqrMagnitude < _agent.stoppingDistance * _agent.stoppingDistance;
+
+           // return !_agent.pathPending &&
+           //(!_agent.hasPath || _agent.remainingDistance <= _agent.stoppingDistance);
 
             //return (_agent.pathPending == false) && (_agent.remainingDistance <= _agent.stoppingDistance + 0.1f);
         }

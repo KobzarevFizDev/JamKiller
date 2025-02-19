@@ -9,7 +9,7 @@ namespace JamKiller.GOB
 
     public abstract class BaseAction
     {
-        public ExecuteStatus Status { get; set; }
+        public ExecuteStatus Status { get; protected set; }
         protected IUnit _ownerUnit;
 
         public BaseAction(IUnit ownerUnit)
@@ -18,5 +18,9 @@ namespace JamKiller.GOB
         }
 
         public abstract void Execute(GoalContext context, float deltaTime);
+        public void ResetStatus()
+        {
+            Status = ExecuteStatus.NotStarted;
+        }
     }
 }

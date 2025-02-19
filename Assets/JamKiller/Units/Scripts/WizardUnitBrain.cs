@@ -17,8 +17,9 @@ namespace JamKiller.Units
             var unit = GetComponent<IUnit>();
             var goalContext = goalFactory.CreateGoalContext(unit);
             _goals = new List<BaseGoal>();
-            _goals.Add(goalFactory.CreateRangedAttackGoal(unit, goalContext));
-            _goals.Add(goalFactory.CreateChangedAttackPositionGoal(unit, goalContext));
+            _goals.Add(goalFactory.CreateSearchEnemyGoal(unit, goalContext));
+            //_goals.Add(goalFactory.CreateRangedAttackGoal(unit, goalContext));
+            //_goals.Add(goalFactory.CreateChangedAttackPositionGoal(unit, goalContext));
         }
 
         public BaseGoal GetActualGoal()
@@ -35,7 +36,7 @@ namespace JamKiller.Units
         private void Update()
         {
             BaseGoal actualGoal = GetActualGoal();
-            Debug.Log($"Актуальная цель = {actualGoal.Id}");
+            //Debug.Log($"Актуальная цель = {actualGoal.Id}");
             actualGoal.Execute(Time.deltaTime);
             //_hideGoal.Execute(Time.deltaTime);
         }
