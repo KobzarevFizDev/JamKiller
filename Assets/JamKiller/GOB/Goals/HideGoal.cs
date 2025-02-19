@@ -12,7 +12,7 @@ namespace JamKiller.GOB
         public override int Utility => _ownerUnit.IsSeriouslyInjured() ? 10 : 0;
 
 
-        public HideGoal(CoverProvider coverProvider, IUnit ownerUnit) : base(ownerUnit)
+        public HideGoal(CoverProvider coverProvider, IUnit ownerUnit, GoalContext context) : base(ownerUnit, context)
         {
             _actions = new List<BaseAction>();
             _actions.Add(new FindCoverAction(coverProvider, ownerUnit));

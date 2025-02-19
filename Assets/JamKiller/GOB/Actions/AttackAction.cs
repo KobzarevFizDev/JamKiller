@@ -9,7 +9,7 @@ namespace JamKiller.GOB
     {
         public AttackAction(IUnit ownerUnit) : base(ownerUnit) { }
 
-        public override void Execute(ActionContext context, float deltaTime)
+        public override void Execute(GoalContext context, float deltaTime)
         {
             _ownerUnit.Attack();
             Status = ExecuteStatus.InProgress;

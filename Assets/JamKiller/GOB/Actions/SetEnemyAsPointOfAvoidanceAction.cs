@@ -10,7 +10,7 @@ namespace JamKiller.GOB
         public SetEnemyAsPointOfAvoidanceAction(IUnit ownerUnit) : base(ownerUnit) { }
 
 
-        public override void Execute(ActionContext context, float deltaTime)
+        public override void Execute(GoalContext context, float deltaTime)
         {
             IUnit targetUnit = context.TargetEnemyUnit;
             context.DestinationPoint = targetUnit.GetPosition();

@@ -15,14 +15,12 @@ namespace JamKiller.GOB
         protected List<BaseAction> _actions;
         protected IUnit _ownerUnit;
 
-        //private ActionVisitor _visitor;
-        private ActionContext _context;
+        private GoalContext _context;
 
-        public BaseGoal(IUnit ownerUnit)
+        public BaseGoal(IUnit ownerUnit, GoalContext context)
         {
             _ownerUnit = ownerUnit;
-            //_visitor = new ActionVisitor();
-            _context = new ActionContext(ownerUnit);
+            _context = context;
         }
 
         public void Execute(float deltaTime)
@@ -39,7 +37,6 @@ namespace JamKiller.GOB
                 if(action.Status == ExecuteStatus.InProgress || action.Status == ExecuteStatus.NotStarted)
                 {
                     action.Execute(_context, deltaTime);
-                    //action.Execute(_visitor, _context, deltaTime);
                     break;
                 }
             }

@@ -15,9 +15,10 @@ namespace JamKiller.Units
         private void Constructor(GoalFactory goalFactory)
         {
             var unit = GetComponent<IUnit>();
+            var goalContext = goalFactory.CreateGoalContext(unit);
             _goals = new List<BaseGoal>();
-            _goals.Add(goalFactory.CreateRangedAttackGoal(unit));
-            _goals.Add(goalFactory.CreateChangedAttackPositionGoal(unit));
+            _goals.Add(goalFactory.CreateRangedAttackGoal(unit, goalContext));
+            _goals.Add(goalFactory.CreateChangedAttackPositionGoal(unit, goalContext));
         }
 
         public BaseGoal GetActualGoal()

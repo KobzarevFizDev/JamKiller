@@ -11,7 +11,7 @@ namespace JamKiller.GOB
 
         public override GoalId Id => GoalId.MeleeAttack;
 
-        public MeleeAttackUnitGoal(UnitsProvider unitsProvider, IUnit ownerUnit) : base(ownerUnit)
+        public MeleeAttackUnitGoal(UnitsProvider unitsProvider, IUnit ownerUnit, GoalContext context) : base(ownerUnit, context)
         {
             _actions = new List<BaseAction>();
             _actions.Add(new FindEnemyUnitAction(unitsProvider, ownerUnit));

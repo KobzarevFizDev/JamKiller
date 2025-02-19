@@ -17,24 +17,29 @@ namespace JamKiller.GOB
             _unitsProvider = unitsProvider;
         }
 
-        public HideGoal CreateHideGoal(IUnit owner)
+        public GoalContext CreateGoalContext(IUnit owner)
         {
-            return new HideGoal(_coverProvider, owner);
+            return new GoalContext(owner);
         }
 
-        public MeleeAttackUnitGoal CreateAttackUnitGoal(IUnit owner)
+        public HideGoal CreateHideGoal(IUnit owner, GoalContext goalContext)
         {
-            return new MeleeAttackUnitGoal(_unitsProvider, owner);
+            return new HideGoal(_coverProvider, owner, goalContext);
         }
 
-        public RangedAttackGoal CreateRangedAttackGoal(IUnit owner)
+        public MeleeAttackUnitGoal CreateAttackUnitGoal(IUnit owner, GoalContext goalContext)
         {
-            return new RangedAttackGoal(_unitsProvider, owner);
+            return new MeleeAttackUnitGoal(_unitsProvider, owner, goalContext);
         }
 
-        public ChangeRangedAttackPositionGoal CreateChangedAttackPositionGoal(IUnit owner)
+        public RangedAttackGoal CreateRangedAttackGoal(IUnit owner, GoalContext goalContext)
         {
-            return new ChangeRangedAttackPositionGoal(owner);
+            return new RangedAttackGoal(_unitsProvider, owner, goalContext);
+        }
+
+        public ChangeRangedAttackPositionGoal CreateChangedAttackPositionGoal(IUnit owner, GoalContext goalContext)
+        {
+            return new ChangeRangedAttackPositionGoal(owner, goalContext);
         }
     }
 }

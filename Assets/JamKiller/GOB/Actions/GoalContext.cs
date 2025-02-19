@@ -6,9 +6,10 @@ using JamKiller.Units;
 
 namespace JamKiller.GOB
 {
-    public class ActionContext
+    // todo: При смене Goal у каждый Goal должен быть определен метод сброса необходимый параметров
+    public class GoalContext
     {
-        public ActionContext(IUnit ownerUnit)
+        public GoalContext(IUnit ownerUnit)
         {
             OwnerUnit = ownerUnit;
         }

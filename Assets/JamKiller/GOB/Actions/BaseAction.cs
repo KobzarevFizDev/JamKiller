@@ -17,6 +17,6 @@ namespace JamKiller.GOB
             _ownerUnit = ownerUnit;
         }
 
-        public abstract void Execute(ActionContext context, float deltaTime);
+        public abstract void Execute(GoalContext context, float deltaTime);
     }
 }

@@ -11,8 +11,9 @@ namespace JamKiller.GOB
 
         // todo: У разных целей разный ActionContext !!!
 
-        public override void Execute(ActionContext context, float deltaTime)
+        public override void Execute(GoalContext context, float deltaTime)
         {
+            Debug.Log("Выполняется FindRangedAttackPositionAction");
             IUnit enemy = context.TargetEnemyUnit;
             Vector3 enemyPosition = enemy.GetPosition();
             DebugExtension.DebugPoint(enemyPosition, Color.red);

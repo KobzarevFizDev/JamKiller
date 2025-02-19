@@ -15,7 +15,7 @@ namespace JamKiller.GOB
             _ownerUnit = ownerUnit;
         }
 
-        public override void Execute(ActionContext context, float deltaTime)
+        public override void Execute(GoalContext context, float deltaTime)
         {
             TeamId team = _ownerUnit.GetTeamId();
             IUnit enemy = _unitsProvider.GetEnemyUnitForTeam(team);

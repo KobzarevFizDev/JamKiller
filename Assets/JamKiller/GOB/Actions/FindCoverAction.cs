@@ -14,7 +14,7 @@ namespace JamKiller.GOB
             _coverProvider = coverProvider;
         }
 
-        public override void Execute(ActionContext context, float deltaTime)
+        public override void Execute(GoalContext context, float deltaTime)
         {
             Cover cover = _coverProvider.GetNearestCover(_ownerUnit);
             if(cover.TryGetSafePosition(out Vector3 safePosition))

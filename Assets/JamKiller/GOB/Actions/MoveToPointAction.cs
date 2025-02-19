@@ -10,7 +10,7 @@ namespace JamKiller.GOB
         public MoveToPointAction(IUnit ownerUnit) : base(ownerUnit) { }
 
 
-        public override void Execute(ActionContext context, float deltaTime)
+        public override void Execute(GoalContext context, float deltaTime)
         {
             if (Status == ExecuteStatus.NotStarted)
             {

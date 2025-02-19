@@ -94,6 +94,28 @@ namespace JamKiller.Units
             _agent.isStopped = false;
         }
 
+        public void StartMoveByPath(Vector3[] path)
+        {
+            StartCoroutine(MoveByPathRoutine(path));
+        }
+
+        private IEnumerator MoveByPathRoutine(Vector3[] path)
+        {
+            for (int currentPoint = 0; currentPoint < path.Length; currentPoint++)
+            {
+                Debug.Log($"Waypoint = {currentPoint + 1}/{path.Length}");
+
+                Vector3 wayPoint = path[currentPoint];
+                _agent.SetDestination(wayPoint);
+
+                yield return new WaitUntil(() => _agent.remainingDistance <= _agent.stoppingDistance);
+            }
+
+            Debug.Log("Waypoint. Completed");
+
+            _agent.ResetPath();
+        }
+
         public void StopMove()
         {
             _target = null;
@@ -101,7 +123,10 @@ namespace JamKiller.Units
         }
         public bool IsMoveCompleted()
         {
-            return (_agent.pathPending == false) && (_agent.remainingDistance <= _agent.stoppingDistance + 0.1f);
+            return !_agent.pathPending &&
+           (!_agent.hasPath || _agent.remainingDistance <= _agent.stoppingDistance);
+
+            //return (_agent.pathPending == false) && (_agent.remainingDistance <= _agent.stoppingDistance + 0.1f);
         }
 
         public Transform GetTransform()
@@ -123,22 +148,6 @@ namespace JamKiller.Units
         {
             return _numberAttackWithoutChanging;
         }
-
-        public void StartMoveByPath(Vector3[] path)
-        {
-            StartCoroutine(MoveByPathRoutine(path));
-        }
-
-        private IEnumerator MoveByPathRoutine(Vector3[] path)
-        {
-            for(int currentPoint = 0; currentPoint < path.Length; currentPoint++)
-            {
-                Vector3 wayPoint = path[currentPoint];
-                _agent.SetDestination(wayPoint);
-                yield return null;
-
-                yield return new WaitUntil(() => _agent.remainingDistance > 0.5f);
-            }
-        }
     }
 }
+
