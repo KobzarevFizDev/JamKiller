@@ -17,7 +17,6 @@ namespace JamKiller.GOB
         public Vector3[] Path { get; set; }
         public IUnit OwnerUnit { private set; get; }
         public Transform Target { get; set; }
-        public Vector3 AvoidancePoint { get; set; }
         public Vector3 DestinationPoint { get; set; }
         public IUnit TargetEnemyUnit { get; set; }
     }

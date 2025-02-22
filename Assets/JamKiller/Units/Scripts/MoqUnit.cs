@@ -81,5 +81,10 @@ namespace JamKiller.Units
         {
             throw new System.NotImplementedException();
         }
+
+        public bool CheckEnemy(out IUnit enemyUnit)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

@@ -5,7 +5,7 @@ using JamKiller.Units;
 
 namespace JamKiller.GOB
 {
-    public enum GoalId { Hide, MeleeAttack, RangedAttack, ChangeRangedAttackPosition }
+    public enum GoalId { Hide, MeleeAttack, RangedAttack, ChangeRangedAttackPosition, SearchEnemy }
     public abstract class BaseGoal
     {
         public abstract int Utility { get; }
@@ -15,7 +15,7 @@ namespace JamKiller.GOB
         protected List<BaseAction> _actions;
         protected IUnit _ownerUnit;
 
-        private GoalContext _context;
+        protected GoalContext _context;
 
         private bool _isLoop;
         private int _currentActionIndex;

@@ -11,14 +11,13 @@ namespace JamKiller.GOB
 
         public override void Execute(GoalContext context, float deltaTime)
         {
-            Debug.Log("Выполняется CalculatePathAroundPointAction");
-
-            DebugExtension.DebugWireSphere(context.DestinationPoint, Color.yellow, 1f, 1000f);
-            DebugExtension.DebugWireSphere(_ownerUnit.GetPosition(), Color.yellow, 1f, 1000f);
-
-            Vector3 center = context.AvoidancePoint;
-            Vector3 finishPoint = context.DestinationPoint;
+            Vector3 center = context.TargetEnemyUnit.GetPosition();
             Vector3 startPoint = _ownerUnit.GetPosition();
+            Vector3 finishPoint = context.DestinationPoint;
+
+            DebugExtension.DebugWireSphere(startPoint, Color.yellow, 1f, 1000f);
+            DebugExtension.DebugWireSphere(finishPoint, Color.yellow, 1f, 1000f);
+            DebugExtension.DebugWireSphere(center, Color.green, 1f, 100f);
 
             float startRadius = Vector3.Distance(startPoint, center);
             float finishRadius = Vector3.Distance(finishPoint, center);
@@ -47,7 +46,7 @@ namespace JamKiller.GOB
 
                 path[i] = p;
 
-                DebugExtension.DebugWireSphere(p, Color.red, 1f, 1000f);
+                DebugExtension.DebugPoint(p, Color.red, 1f, 100f);
             }
 
             context.Path = path;

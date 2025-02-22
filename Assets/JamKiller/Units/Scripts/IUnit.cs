@@ -6,6 +6,9 @@ namespace JamKiller.Units
 {
     public interface IUnit
     {
+
+        public bool CheckEnemy(out IUnit enemyUnit);
+
         public void StartMoveToTarget(Transform target);
         public void StartMoveToPoint(Vector3 point);
         public void StartMoveByPath(Vector3[] path);

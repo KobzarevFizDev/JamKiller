@@ -16,6 +16,7 @@ namespace JamKiller.Units
 
         [SerializeField] private NavMeshAgent _agent;
         [SerializeField] private UnitAnimation _unitAnimation;
+        [SerializeField] private EnemySensor _enemySensor;
 
         [Range(1, 10)]
         [SerializeField] private float _optimalRangedAttackDistance;
@@ -27,8 +28,8 @@ namespace JamKiller.Units
 
         [Range(0.2f, 1f)]
         [SerializeField] private float _timeBetweenPathUpdate = 0.5f;
-        [Range(0.2f, 1f)]
-        [SerializeField] private float _timeBetweenAttack = 0.5f;
+        [Range(0.2f, 10f)]
+        [SerializeField] private float _timeBetweenAttack = 5f;
 
         private float _timerUpdatePath;
         private float _timerAttack;
@@ -95,6 +96,7 @@ namespace JamKiller.Units
             _target = target;
             _agent.SetDestination(target.position);
             _agent.isStopped = false;
+            _numberAttackWithoutChanging = 0;
         }
 
         public void StartMoveToPoint(Vector3 point)
@@ -103,11 +105,13 @@ namespace JamKiller.Units
             _destinationPoint = point;
             _agent.SetDestination(point);
             _agent.isStopped = false;
+            _numberAttackWithoutChanging = 0;
         }
 
         public void StartMoveByPath(Vector3[] path)
         {
             _movementType = MovementType.MoveByPath;
+            _numberAttackWithoutChanging = 0;
             _path = path;
             StartCoroutine(MoveByPathRoutine(path));
         }
@@ -163,13 +167,7 @@ namespace JamKiller.Units
             Vector3 b = new Vector3(transform.position.x, 0, transform.position.z);
 
             return Vector3.Distance(a, b) < 1f;
-            //return (destinationPoint - transform.position).sqrMagnitude < _agent.stoppingDistance * _agent.stoppingDistance;
-
-           // return !_agent.pathPending &&
-           //(!_agent.hasPath || _agent.remainingDistance <= _agent.stoppingDistance);
-
-            //return (_agent.pathPending == false) && (_agent.remainingDistance <= _agent.stoppingDistance + 0.1f);
-        }
+                  }
 
         public Transform GetTransform()
         {
@@ -189,6 +187,20 @@ namespace JamKiller.Units
         public int GetNumberAttacksWithouChangingPosition()
         {
             return _numberAttackWithoutChanging;
+        }
+
+        public bool CheckEnemy(out IUnit enemyUnit)
+        {
+            enemyUnit = null;
+            if(_enemySensor.CheckEnemy(TeamId.PC, out enemyUnit))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
     }
 }

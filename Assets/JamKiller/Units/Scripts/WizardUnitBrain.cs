@@ -6,11 +6,9 @@ using Zenject;
 
 namespace JamKiller.Units
 {
-    // todo: Нужно сделать базовый класс для UnitBrain
-    public class WizardUnitBrain : MonoBehaviour
-    {
-        private List<BaseGoal> _goals;
 
+    public class WizardUnitBrain : BaseUnitBrain
+    {
         [Inject]
         private void Constructor(GoalFactory goalFactory)
         {
@@ -18,27 +16,7 @@ namespace JamKiller.Units
             var goalContext = goalFactory.CreateGoalContext(unit);
             _goals = new List<BaseGoal>();
             _goals.Add(goalFactory.CreateSearchEnemyGoal(unit, goalContext));
-            //_goals.Add(goalFactory.CreateRangedAttackGoal(unit, goalContext));
-            //_goals.Add(goalFactory.CreateChangedAttackPositionGoal(unit, goalContext));
-        }
-
-        public BaseGoal GetActualGoal()
-        {
-            BaseGoal actualGoal = null;
-            foreach (BaseGoal goal in _goals)
-            {
-                if (actualGoal == null || actualGoal.Utility < goal.Utility)
-                    actualGoal = goal;
-            }
-            return actualGoal;
-        }
-
-        private void Update()
-        {
-            BaseGoal actualGoal = GetActualGoal();
-            //Debug.Log($"Актуальная цель = {actualGoal.Id}");
-            actualGoal.Execute(Time.deltaTime);
-            //_hideGoal.Execute(Time.deltaTime);
+            _goals.Add(goalFactory.CreateRangedAttackGoal(unit, goalContext));
         }
     }
 }

@@ -13,11 +13,10 @@ namespace JamKiller.GOB
         {
             get
             {
-                int numberOfAttacks = _ownerUnit.GetNumberAttacksWithouChangingPosition();
-                if (numberOfAttacks > 2)
+                if (_context.TargetEnemyUnit == null)
                     return 0;
                 else
-                    return 10;
+                    return 100;
             }
         }
 
@@ -25,9 +24,9 @@ namespace JamKiller.GOB
             : base(ownerUnit, context, isLoop: true)
         {
             _actions = new List<BaseAction>();
-            //_actions.Add(new FindEnemyUnitAction(unitsProvider, ownerUnit));
             _actions.Add(new FindRangedAttackPositionAction(ownerUnit));
-            _actions.Add(new MoveToPointAction(ownerUnit));
+            _actions.Add(new CalculatePathAroundPointAction(ownerUnit));
+            _actions.Add(new MoveByPathAction(ownerUnit));
             _actions.Add(new AttackAction(ownerUnit));
         }
 

@@ -11,8 +11,15 @@ namespace JamKiller.GOB
 
         public override void Execute(GoalContext context, float deltaTime)
         {
-            _ownerUnit.Attack();
-            Status = ExecuteStatus.InProgress;
+            if(_ownerUnit.GetNumberAttacksWithouChangingPosition() < 2)
+            {
+                _ownerUnit.Attack();
+                Status = ExecuteStatus.InProgress;
+            }
+            else
+            {
+                Status = ExecuteStatus.Completed;
+            }
         }
     }
 }
