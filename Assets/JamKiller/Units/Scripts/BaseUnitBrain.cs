@@ -9,6 +9,8 @@ namespace JamKiller.Units
     {
         protected List<BaseGoal> _goals;
 
+        private BaseGoal _previousGoal;
+        private BaseGoal _actualGoal;
 
         private BaseGoal GetActualGoal()
         {
@@ -23,9 +25,20 @@ namespace JamKiller.Units
 
         private void Update()
         {
-            BaseGoal actualGoal = GetActualGoal();
-            Debug.Log($"Актуальная цель = {actualGoal.Id}");
-            actualGoal.Execute(Time.deltaTime);
+            _previousGoal = _actualGoal;
+            _actualGoal = GetActualGoal();
+            if (GoalWasChanged())
+            {
+                _previousGoal?.Reset();
+                _actualGoal.Reset();
+                Debug.Log($"Актуальная цель = {_actualGoal.Id}");
+            }
+            _actualGoal.Execute(Time.deltaTime);
+        }
+
+        private bool GoalWasChanged()
+        {
+            return _previousGoal != _actualGoal;
         }
     }
 }

@@ -27,10 +27,5 @@ namespace JamKiller.GOB
             _actions.Add(new CreateRandomWayPointAction(ownerUnit));
             _actions.Add(new MoveToPointAction(ownerUnit, needToSearchEnemy: true));
         }
-
-        public override void Interrupt()
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

@@ -19,10 +19,5 @@ namespace JamKiller.GOB
             _actions.Add(new FindCoverAction(coverProvider, ownerUnit));
             _actions.Add(new MoveToPointAction(ownerUnit, needToSearchEnemy: false));
         }
-
-        public override void Interrupt()
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

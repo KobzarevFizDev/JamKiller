@@ -81,6 +81,7 @@ namespace JamKiller.Units
                 Debug.Log("Анимация атаки");
                 _timerAttack -= _timeBetweenAttack;
                 _numberAttackWithoutChanging++;
+                _unitAnimation.PlaySpellFire();
             }
 
         }
@@ -120,15 +121,15 @@ namespace JamKiller.Units
         {
             for (int currentPoint = 0; currentPoint < path.Length; currentPoint++)
             {
-                Debug.Log($"Waypoint = {currentPoint + 1}/{path.Length}");
-
                 Vector3 wayPoint = path[currentPoint];
                 _agent.SetDestination(wayPoint);
 
-                yield return new WaitUntil(() => _agent.remainingDistance <= _agent.stoppingDistance);
-            }
+                yield return new WaitUntil(() => !_agent.pathPending);
 
-            Debug.Log("Waypoint. Completed");
+                DebugExtension.DebugWireSphere(wayPoint, Color.yellow, 1f, 5f);
+
+                yield return new WaitUntil(() => _agent.remainingDistance <= 0.5f);
+            }
 
             _agent.ResetPath();
         }
@@ -166,8 +167,13 @@ namespace JamKiller.Units
             Vector3 a = new Vector3(destinationPoint.x, 0, destinationPoint.z);
             Vector3 b = new Vector3(transform.position.x, 0, transform.position.z);
 
+
+            DebugExtension.DebugWireSphere(a, Color.red, 1f);
+            DebugExtension.DebugWireSphere(b, Color.red, 1f);
+            Debug.Log($"Left to target = {Vector3.Distance(a, b) }");
+
             return Vector3.Distance(a, b) < 1f;
-                  }
+        }
 
         public Transform GetTransform()
         {

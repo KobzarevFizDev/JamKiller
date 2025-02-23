@@ -13,6 +13,7 @@ namespace JamKiller.GOB
         public override void Execute(GoalContext context, float deltaTime)
         {
             Debug.Log("Выполняется MoveByPathAction");
+
             if (Status == ExecuteStatus.NotStarted)
             {
                 _ownerUnit.StartMoveByPath(context.Path);

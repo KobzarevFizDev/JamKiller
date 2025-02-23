@@ -33,9 +33,9 @@ namespace JamKiller.Units
             
         }
 
-        public void SpellFire()
+        public void PlaySpellFire()
         {
-            _animator.SetBool(_fireSpellHash, true);
+            _animator.SetTrigger(_fireSpellHash);
         }
 
         public void StartSpell()

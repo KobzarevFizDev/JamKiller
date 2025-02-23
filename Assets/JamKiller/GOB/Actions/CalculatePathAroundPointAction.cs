@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using JamKiller.Units;
+using UnityEngine.AI;
 
 namespace JamKiller.GOB
 {
@@ -14,10 +15,6 @@ namespace JamKiller.GOB
             Vector3 center = context.TargetEnemyUnit.GetPosition();
             Vector3 startPoint = _ownerUnit.GetPosition();
             Vector3 finishPoint = context.DestinationPoint;
-
-            DebugExtension.DebugWireSphere(startPoint, Color.yellow, 1f, 1000f);
-            DebugExtension.DebugWireSphere(finishPoint, Color.yellow, 1f, 1000f);
-            DebugExtension.DebugWireSphere(center, Color.green, 1f, 100f);
 
             float startRadius = Vector3.Distance(startPoint, center);
             float finishRadius = Vector3.Distance(finishPoint, center);
@@ -44,9 +41,9 @@ namespace JamKiller.GOB
                 float z = center.z + radius * Mathf.Sin(angle);
                 Vector3 p = new Vector3(x, center.y, z);
 
-                path[i] = p;
+                NavMesh.SamplePosition(p, out NavMeshHit hit, finishRadius, NavMesh.AllAreas);
 
-                DebugExtension.DebugPoint(p, Color.red, 1f, 100f);
+                path[i] = hit.position;
             }
 
             context.Path = path;

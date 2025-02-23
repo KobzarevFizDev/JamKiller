@@ -30,10 +30,5 @@ namespace JamKiller.GOB
             _actions.Add(new StopMoveAction(ownerUnit));
             _actions.Add(new AttackAction(ownerUnit));
         }
-
-        public override void Interrupt()
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

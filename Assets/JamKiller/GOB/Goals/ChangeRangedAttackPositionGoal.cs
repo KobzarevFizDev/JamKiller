@@ -29,10 +29,5 @@ namespace JamKiller.GOB
             _actions.Add(new CalculatePathAroundPointAction(ownerUnit));
             _actions.Add(new MoveByPathAction(ownerUnit));
         }
-
-        public override void Interrupt()
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

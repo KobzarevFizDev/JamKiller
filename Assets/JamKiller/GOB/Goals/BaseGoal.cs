@@ -19,8 +19,6 @@ namespace JamKiller.GOB
 
         private bool _isLoop;
         private int _currentActionIndex;
-
-
         public BaseGoal(IUnit ownerUnit, GoalContext context, bool isLoop)
         {
             _ownerUnit = ownerUnit;
@@ -49,8 +47,6 @@ namespace JamKiller.GOB
 
             BaseAction currentAction = _actions[_currentActionIndex];
 
-            Debug.Log($"CurrentAction = {currentAction}");
-
             if(currentAction.Status == ExecuteStatus.Completed)
             {
                 _currentActionIndex++;
@@ -59,25 +55,13 @@ namespace JamKiller.GOB
             {
                 currentAction.Execute(_context, deltaTime);
             }
-
-            //bool allCompleted = true;
-            //foreach(var action in _actions)
-            //{
-            //    if (action.Status == ExecuteStatus.Completed)
-            //        continue;
-
-            //    allCompleted = false;
-
-            //    if(action.Status == ExecuteStatus.InProgress || action.Status == ExecuteStatus.NotStarted)
-            //    {
-            //        action.Execute(_context, deltaTime);
-            //        break;
-            //    }
-            //}
-            //IsCompleted = allCompleted;
         }
 
 
-        public abstract void Interrupt();
+        public void Reset()
+        {
+            foreach (BaseAction action in _actions)
+                action.ResetStatus();
+        }
     }
 }
