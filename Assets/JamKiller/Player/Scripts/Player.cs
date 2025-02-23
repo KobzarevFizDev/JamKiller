@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using JamKiller.Units;
 
 namespace JamKiller.Player
 {
-
     public class Player : MonoBehaviour
     {
         [SerializeField] private Rigidbody _rigidbody;
