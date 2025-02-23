@@ -2,6 +2,7 @@
 
 Разрабатывается на Unity 2022.3.44f1
 
-Данный проект представляет из себя развитие идеи созданной игры во время Джема Ludum Dare 55
+Данный проект является развитием идеи созданной во время Джема Ludum Dare 55 игры 
 
-[![Смотреть видео](https://img.youtube.com/vi/NKrJJWQMero/0.jpg)](https://www.youtube.com/watch?v=NKrJJWQMero)
+Целью данного проекта является изучение GOB/GOAP подхода в создании игрового ИИ, а также изучение ShaderGraph + VFX Graph
+![Interface](https://github.com/KobzarevFizDev/JamKiller/raw/main/JamKillerReadme/2.png)
