@@ -27,6 +27,7 @@ namespace JamKiller.GOB
             _actions.Add(new FindRangedAttackPositionAction(ownerUnit));
             _actions.Add(new CalculatePathAroundPointAction(ownerUnit));
             _actions.Add(new MoveByPathAction(ownerUnit));
+            _actions.Add(new StopMoveAction(ownerUnit));
             _actions.Add(new AttackAction(ownerUnit));
         }
 
